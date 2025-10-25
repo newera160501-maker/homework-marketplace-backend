@@ -21,23 +21,8 @@ def create_app():
         print("✅ Database tables created")
 
     # --- Register blueprints with URL prefixes ---
-    app.register_blueprint(auth_bp, url_prefix='/auth')
-    app.register_blueprint(tasks_bp, url_prefix='/tasks')
-
-    # --- Optional home route ---
-    @app.route('/')
-    def home():
-        return {'message': 'Backend is running successfully!'}
-
-    return app
-
-
-    # --- Initialize extensions ---
-    db.init_app(app)
-
-    # --- Register blueprints with URL prefixes ---
-    app.register_blueprint(auth_bp, url_prefix='/auth')
-    app.register_blueprint(tasks_bp, url_prefix='/tasks')
+    app.register_blueprint(auth_bp)
+    app.register_blueprint(tasks_bp)
 
     # --- Optional home route ---
     @app.route('/')
