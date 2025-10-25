@@ -8,7 +8,7 @@ def create_app():
     app = Flask(__name__)
 
     # Configurations
-    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'defaultsecretkey')  # Provide a fallback value
+    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'defaultsecretkey')
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///site.db')
     app.config['UPLOAD_FOLDER'] = 'uploads'
 
@@ -21,6 +21,8 @@ def create_app():
 
     return app
 
+# Expose app for Gunicorn
+app = create_app()
+
 if __name__ == "__main__":
-    app = create_app()
     app.run(host="0.0.0.0", port=5000, debug=True)
