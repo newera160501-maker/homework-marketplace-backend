@@ -17,7 +17,7 @@ Flask-Login==0.6.3
 Flask-Bcrypt==1.0.1
 
 # CORS (if Flutter app runs on another host during testing)
-Flask-Cors==4.1.2
+Flask-Cors==3.0.10
 
 # Optional for handling file uploads securely
 Werkzeug==2.3.7
