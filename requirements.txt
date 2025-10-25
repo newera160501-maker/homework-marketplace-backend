@@ -1,3 +1,23 @@
-from flask_sqlalchemy import SQLAlchemy
+# Core
+Flask==2.3.5
+Flask-SQLAlchemy==3.0.5
+gunicorn==21.2.0
+python-dotenv==1.0.0
 
-db = SQLAlchemy()
+# Database driver (choose one)
+psycopg2-binary==2.9.9  # For PostgreSQL
+# mysqlclient==2.2.0      # For MySQL (uncomment if using MySQL)
+# SQLite is built-in, no extra package needed
+
+# Migrations
+Flask-Migrate==4.0.4
+
+# Authentication & Security
+Flask-Login==0.6.3
+Flask-Bcrypt==2.1.1
+
+# CORS (if Flutter app runs on another host during testing)
+Flask-Cors==4.1.2
+
+# Optional for handling file uploads securely
+Werkzeug==2.3.7
