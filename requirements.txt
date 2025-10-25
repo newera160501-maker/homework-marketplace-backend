@@ -4,20 +4,14 @@ Flask-SQLAlchemy==3.0.5
 gunicorn==21.2.0
 python-dotenv==1.0.0
 
-# Database driver
-psycopg2-binary==2.9.9  # PostgreSQL
-# mysqlclient==2.2.0      # For MySQL (uncomment if needed)
-# SQLite is built-in
+# Database driver (PostgreSQL)
+psycopg2-binary==2.9.9
 
-# Migrations
+# Migrations (optional, useful if you want schema updates)
 Flask-Migrate==4.0.4
 
-# Auth & Security
-Flask-Login==0.6.3
-Flask-Bcrypt==1.0.1
-
-# CORS
+# CORS (needed if your frontend is separate)
 Flask-Cors==3.0.10
 
-# Optional
+# Optional (for internal utilities)
 Werkzeug==2.3.7
