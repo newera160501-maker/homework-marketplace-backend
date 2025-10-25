@@ -15,16 +15,36 @@ def create_app():
     # --- Initialize extensions ---
     db.init_app(app)
 
-    # --- Register blueprints with prefixes ---
+    # --- Automatically create tables ---
+    with app.app_context():
+        db.create_all()
+        print("✅ Database tables created")
+
+    # --- Register blueprints with URL prefixes ---
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(tasks_bp, url_prefix='/tasks')
 
+    # --- Optional home route ---
     @app.route('/')
     def home():
         return {'message': 'Backend is running successfully!'}
 
     return app
 
+
+    # --- Initialize extensions ---
+    db.init_app(app)
+
+    # --- Register blueprints with URL prefixes ---
+    app.register_blueprint(auth_bp, url_prefix='/auth')
+    app.register_blueprint(tasks_bp, url_prefix='/tasks')
+
+    # --- Optional home route ---
+    @app.route('/')
+    def home():
+        return {'message': 'Backend is running successfully!'}
+
+    return app
 
 # --- Expose app for Gunicorn ---
 app = create_app()
