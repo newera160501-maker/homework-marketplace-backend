@@ -1,15 +1,18 @@
-from flask import Flask
+from flask import Flask, jsonify
 import os
 from extensions import db
-from routes.auth import auth_bp
-from routes.tasks import tasks_bp
+from routes.tasks import tasks_bp  # Auth removed since login is ignored
 
 def create_app():
+    """Factory to create and configure the Flask app."""
     app = Flask(__name__)
 
     # --- Configurations ---
     app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'defaultsecretkey')
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///site.db')
+
+    # Use Render writable directory for SQLite
+    db_path = os.path.join("/tmp", "site.db")
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', f"sqlite:///{db_path}")
     app.config['UPLOAD_FOLDER'] = 'uploads'
 
     # --- Initialize extensions ---
@@ -20,20 +23,21 @@ def create_app():
         db.create_all()
         print("✅ Database tables created")
 
-    # --- Register blueprints with URL prefixes ---
-    app.register_blueprint(auth_bp)
-    app.register_blueprint(tasks_bp)
+    # --- Register blueprints ---
+    app.register_blueprint(tasks_bp)  # Only tasks, auth removed
 
-    # --- Optional home route ---
+    # --- Home route ---
     @app.route('/')
     def home():
-        return {'message': 'Backend is running successfully!'}
+        """Simple health check route."""
+        return jsonify({'message': 'Backend is running successfully!'})
 
     return app
+
 
 # --- Expose app for Gunicorn ---
 app = create_app()
 
 if __name__ == "__main__":
-    # For local development
+    # Only for local development (not needed on Render)
     app.run(host="0.0.0.0", port=5000, debug=True)
