@@ -4,9 +4,20 @@ import os
 
 tasks_bp = Blueprint('tasks', __name__, url_prefix='/tasks')
 
-# In-memory storage (replace with DB later)
+# In-memory storage
 tasks = []
 
+# GET all tasks
+@tasks_bp.route("/", methods=["GET"])
+def all_tasks():
+    return jsonify({"tasks": tasks}), 200
+
+# GET recent 10 tasks
+@tasks_bp.route("/recent", methods=["GET"])
+def recent_tasks():
+    return jsonify({"tasks": tasks[-10:][::-1]}), 200
+
+# POST a task with optional file
 @tasks_bp.route("/upload", methods=["POST"])
 def upload_task():
     if 'file' not in request.files and 'description' not in request.form:
@@ -26,8 +37,3 @@ def upload_task():
     tasks.append(task)
 
     return jsonify({"message": "Task uploaded successfully", "task": task}), 201
-
-
-@tasks_bp.route("/recent", methods=["GET"])
-def recent_tasks():
-    return jsonify({"tasks": tasks[-10:][::-1]}), 200
